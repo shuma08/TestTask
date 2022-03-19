@@ -1,0 +1,49 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "imageUrl": "https://www.thenewsolutions.org/wp-content/uploads/2019/10/bmw-logo-248C3D90E6-seeklogo.com_.png",
+      "name": "Product name2",
+      "count": 4,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "weight": "200g",
+      "comments": [
+        "CommentModel",
+        "CommentModel"
+      ]
+    },
+    {
+      "id": 2,
+      "imageUrl": "https://www.thenewsolutions.org/wp-content/uploads/2019/10/bmw-logo-248C3D90E6-seeklogo.com_.png",
+      "name": "Product name2",
+      "count": 5,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "weight": "200g",
+      "comments": [
+        "CommentModel",
+        "CommentModel"
+      ]
+    },
+    {
+      "id": 4,
+      "imageUrl": "https://www.thenewsolutions.org/wp-content/uploads/2019/10/bmw-logo-248C3D90E6-seeklogo.com_.png",
+      "name": "Product name4",
+      "count": 7,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "weight": "200g",
+      "comments": [
+        "CommentModel",
+        "CommentModel"
+      ]
+    }
+  ]
+}
