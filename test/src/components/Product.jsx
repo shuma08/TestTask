@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {productActions,deleteProduct} from "../redux/action/getProduct";
+import {productActions,deleteProduct} from "../redux/action/getProductAction";
 import NewModal from "./modals/modal";
+import ProductModal from "./modals/ProductModal/ProductModal";
 import ConfirmModal from "./modals/confirmModal/confirmModal";
 import useModal from "../customHooks/useModal";
 import "./ProductStyles.css";
@@ -16,6 +17,7 @@ const Product = ({value}) => {
         setConfirmModal(false)
         console.log("delete")
     }
+    console.log("value",value.id)
     const handleSave = (value) => {
         dispatch(productActions.editProduct(value))
         // closeModal()
@@ -36,6 +38,7 @@ const Product = ({value}) => {
             </div>
            </div>
            {modal && <NewModal onOpen={handleOpen} data={value} onClose={handleClose} onSave={handleSave}  />}
+           {/* {modal && <ProductModal onOpen={handleOpen} data={value} onClose={handleClose} onSave={handleSave}/>} */}
            {confirmModal && <ConfirmModal onSubmit={hendleDelete} onCancel={()=>setConfirmModal(false)} />}
         </div>
     )

@@ -1,0 +1,83 @@
+.rs-modal-content input {
+    border: none;
+    background: #fbf6f3;
+    border-radius: 10px;
+    height: 30px;
+    width: 100%;
+}
+.rs-modal-content {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    position: absolute;
+    justify-content: center;
+    border-radius: 10px;
+    border: none;
+    height: 450px;
+    background: #fff;
+    box-shadow: 3px 3px 3px grey;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.rs-modal-header-close.rs-btn-close {
+    display: none;
+}
+input[type="file"] {
+    display: none;
+}
+.rs-uploader-trigger-btn {
+    width: 50%;
+    border-radius: 10px;
+    border: none;
+    height: 25px;
+    background-color: rgb(102, 193, 232, 0.8);
+    color: #fff;
+    width: 150px;
+    height: 30px;
+    margin-top: 10px;
+    /* text-align: end; */
+
+}
+.rs-uploader-trigger {
+    text-align: end;
+}
+.rs-uploader-trigger-btn:hover {
+    background-color: rgb(102, 193, 232, 1);
+    cursor: pointer;
+}
+#description {
+    width: 100%;
+    border: none;
+    background: #fbf6f3;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.cancelBtn.rs-btn.rs-btn-default{
+    width: 50%;
+    border-radius: 10px;
+    border: none;
+    height: 25px;
+    background-color: rgb(102, 193, 232, 0.8);
+    color: #fff;
+    width: 150px;
+    height: 30px;
+    margin-right: 3px;
+}
+.cancelBtn.rs-btn.rs-btn-default:hover{
+    background-color: rgb(102, 193, 232, 1);
+    cursor: pointer;
+}
+.saveBtn.rs-btn.rs-btn-primary {
+    width: 50%;
+    border-radius: 10px;
+    border: none;
+    height: 25px;
+    background-color: rgb(102, 193, 232, 0.8);
+    color: #fff;
+    width: 150px;
+    height: 30px;
+}
+.saveBtn.rs-btn.rs-btn-primary:hover {
+    background-color: rgb(102, 193, 232, 1);
+    cursor: pointer;
+}

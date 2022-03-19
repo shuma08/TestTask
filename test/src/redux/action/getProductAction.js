@@ -19,10 +19,9 @@ export const productActions = {
       type:DELETE_PRODUCT,
       id
     }),
-    postProduct:(data,id) => ({
+    postProduct:(data) => ({
       type:POST_PRODUCT,
-      data,
-      id
+      data
     }),
     editProduct:(data) => ({
       type:EDIT_PRODUCT,
@@ -43,24 +42,23 @@ export const productActions = {
     dispatch(request());
     try {
       const products = await fetch("http://localhost:3002/products").then(res => res.json())
-      console.log("products",products)
       dispatch(receive(products));
     } catch (e) {
       dispatch(failed(e.response.data.error));
     } 
   };
-  export const postProduct = (data,id) => async (dispatch) => {
+  export const postProduct = (data) => async (dispatch) => {
     const { request, receive, failed } = productActions;
     try {
       const editProduct = await fetch("http://localhost:3002/products/", {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
       })
-      .then(res => res.json()) 
-      .then(res => console.log("editProduct",res))
-      dispatch(productActions.postProduct(data,id))
-      console.log("products",editProduct)
-
+      .then(res => res.json())
+      dispatch(productActions.postProduct(data))
     } catch (e) {
       dispatch(failed(e.response.data.error));
     } 
@@ -71,10 +69,8 @@ export const productActions = {
       const product = await fetch(`http://localhost:3002/products/${id}`, {
         method: 'DELETE',
       })
-      .then(res => res.text()) 
-      .then(res => console.log(res))
+      .then(res => res.json())
       dispatch(productActions.productDelete(id))
-      console.log("products",product)
     } catch (e) {
       dispatch(failed(e.response.data.error));
     } 
@@ -84,12 +80,13 @@ export const productActions = {
     try {
       const editProduct = await fetch(`http://localhost:3002/products/${data.id}`, {
         method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
       })
       .then(res => res.text()) 
-      .then(res => console.log(res))
       dispatch(productActions.editProduct(data))
-      console.log("products",editProduct)
     } catch (e) {
       dispatch(failed(e.response.data.error));
     } 

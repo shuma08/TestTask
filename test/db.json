@@ -44,6 +44,12 @@
         "CommentModel",
         "CommentModel"
       ]
+    },
+    {
+      "name": "Product name2f",
+      "count": "10",
+      "imageUrl": "https://cdn.worldvectorlogo.com/logos/bmw-2.svg",
+      "id": 6
     }
   ]
 }
