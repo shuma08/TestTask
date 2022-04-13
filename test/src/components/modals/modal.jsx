@@ -1,4 +1,7 @@
 import React, { useState, useRef,useEffect} from "react";
+import { useDispatch } from "react-redux";
+import useModal from "../../customHooks/useModal";
+import { postProduct } from "../../redux/action/getProductAction";
 import { Modal,Button,Form,Schema} from 'rsuite';
 import "./style.css";
 
@@ -16,11 +19,14 @@ const initialFormValue = {
 }
 const NewModal = ({onOpen,onClose,onSave,data=initialFormValue}) => {
   const [formValue, setFormValue] = useState(data);
+  const dispatch = useDispatch();
+  const [modal, handleOpen, handleClose] = useModal()
   const formRef = useRef();
-   const handleSubmit = () => {
-       onSave(formValue)
-       onClose()
-   }
+  const handleSubmit = () => {
+    handleClose()
+    onClose();
+    onSave(dispatch(postProduct(formValue)));
+  };
    const handleChange = (event) => {setFormValue({...formValue, [event.target.name]: event.target.value})}
    return (
       <div className="modal-container">

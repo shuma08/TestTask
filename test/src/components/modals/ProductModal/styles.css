@@ -81,3 +81,20 @@ input[type="file"] {
     background-color: rgb(102, 193, 232, 1);
     cursor: pointer;
 }
+.uploader-container {
+    margin-top: 5px;
+    display: flex;
+    justify-content: end;
+}
+.uploader {
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(102, 193, 232, 0.8);
+    color: #fff;
+    width: 150px;
+    height: 30px;
+    padding: 3px;
+    text-align: center;
+    box-sizing: border-box;
+}
+

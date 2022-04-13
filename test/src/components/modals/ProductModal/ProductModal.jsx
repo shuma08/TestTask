@@ -46,15 +46,29 @@ const initialFormValue = {
   }
 const ProductModal = ({ onOpen, onSave, onClose, data=initialFormValue }) => {
   const formRef = useRef();
-  const dispatch = useDispatch();
-  const [modal, handleOpen, handleClose] = useModal()
   const [formValue, setFormValue] = useState(data);
-
+  const [avatar, setAvatar] = useState(null);
   const handleSubmit = () => {
-    handleClose()
+    // if (!formRef.current.check()) {
+    //   return;
+    // }
     onClose();
-    onSave(dispatch(postProduct(formValue)));
+    onSave(formValue);
   };
+  const handleImg = (e) => {
+    console.log(e.target.files[0]);
+    if (e?.target?.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        console.log('RESULT', reader.result)
+        setFormValue({...formValue, imageUrl: reader.result})
+      }
+      const avatarBase = reader.readAsDataURL(file);
+      console.log(avatarBase);
+      setFormValue({...formValue, imageUrl: avatarBase})
+    }
+  }
 
   return (
     <Modal
@@ -89,18 +103,24 @@ const ProductModal = ({ onOpen, onSave, onClose, data=initialFormValue }) => {
               placeholder="Set number of product"
             />
           </div>
-          <Uploader multiple listType="picture" fileListVisible={false} action="http://localhost:3002/products/">
+          {/* <Uploader
+            action="http://localhost:3002/products/"
+          >
             <button>
                 Upload your photo
             </button>
-          </Uploader>
-          <TextField
+          </Uploader> */}
+         
+          {/* <TextField
               className="customize_time"
               name="imageUrl"
               label="imageUrl"
               placeholder="Paste img Url"
-            />
-          <div>
+            /> */}
+          <div className="uploader-container">
+          <label className="uploader" htmlFor='avatar'> Choose img</label>
+          <input type='file' id='avatar' onChange={handleImg} />
+          {avatar && <img src={avatar} alt='avatar'/>}
           </div>
         </div>
         <TextField

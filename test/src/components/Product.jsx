@@ -1,44 +1,36 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {productActions,deleteProduct} from "../redux/action/getProductAction";
-import NewModal from "./modals/modal";
-import ProductModal from "./modals/ProductModal/ProductModal";
+import {deleteProduct} from "../redux/action/getProductAction";
 import ConfirmModal from "./modals/confirmModal/confirmModal";
-import useModal from "../customHooks/useModal";
 import "./ProductStyles.css";
 
-const Product = ({value}) => {
-    const [modal, handleOpen, handleClose] = useModal()
-    const [confirmModal,setConfirmModal] = useState(false);
-    const {id} = value;
+const Product = ({value, setCurrentItem, handleOpen}) => {
+    const [confirmModal, setConfirmModal] = useState(false);
+    const {id, imageUrl, count, name} = value;
     const dispatch = useDispatch()
     const hendleDelete = () => {
         dispatch(deleteProduct(id))
         setConfirmModal(false)
-        console.log("delete")
     }
-    console.log("value",value.id)
-    const handleSave = (value) => {
-        dispatch(productActions.editProduct(value))
-        // closeModal()
+    const handleModal = () => {
+        setCurrentItem(value);
+        handleOpen();
     }
     return (
         <div className="product-container">
             <div className="content-container">
-            <div className="img-container">
-                <img src={value?.imageUrl}></img>
-            </div>
-            <div>
-                <h2>{value?.name}</h2>
-            </div>
-            <p>Number of items {value?.count}</p>
-            <div className="btnContainer">
-            <button onClick={handleOpen}>Edit</button>
-            <button onClick={()=>setConfirmModal(true) } > Delete</button>
-            </div>
+                <div className="img-container">
+                    <img src={imageUrl}></img>
+                </div>
+                <div>
+                    <h2>{name}</h2>
+                </div>
+                <p>Number of items {count}</p>
+                <div className="btnContainer">
+                    <button onClick={handleModal}>Edit</button>
+                    <button onClick={()=>setConfirmModal(true)}>Delete</button>
+                </div>
            </div>
-           {modal && <NewModal onOpen={handleOpen} data={value} onClose={handleClose} onSave={handleSave}  />}
-           {/* {modal && <ProductModal onOpen={handleOpen} data={value} onClose={handleClose} onSave={handleSave}/>} */}
            {confirmModal && <ConfirmModal onSubmit={hendleDelete} onCancel={()=>setConfirmModal(false)} />}
         </div>
     )

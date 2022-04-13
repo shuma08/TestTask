@@ -5,36 +5,55 @@ import NewModal from "../components/modals/modal";
 import ProductModal from "../components/modals/ProductModal/ProductModal";
 import Product from "../components/Product";
 import useModal from "../customHooks/useModal";
-import {productActions,getProducts} from "../redux/action/getProductAction";
+import {productActions,getProducts, postProduct, editProduct} from "../redux/action/getProductAction";
 import "./styles.css";
 
 const ProductPage = () => {
-    const [modal, handleOpen, handleClose] = useModal()
-    const [confirmModal,setConfirmModal] = useState(false)
-    const list = useSelector(state => state.productList.list )
     const dispatch = useDispatch();
-    const handleSave = () => {
-        closeModal()
+    const [confirmModal, setConfirmModal] = useState(false);
+    const [currentItem, setCurrentItem] = useState(null);
+    const [search, setSearch] = useState("");
+    const list = useSelector(state => state.productList.list );
+    const [modal, handleOpen, handleClose] = useModal();
+    const handleSave = (value) => {
+        dispatch(postProduct(value))
+        setConfirmModal(!setConfirmModal);
     }
+    const handleEdit = (data) => dispatch(editProduct(data));
+    const handleSearch = (e) => setSearch(e.target.value);
     
     useEffect(()=>{
         dispatch(getProducts())
-    },[])
-    const closeConfirmModal = () => setConfirmModal(!setConfirmModal)
-    const closeModal = () => closeConfirmModal()
+    },[]);
  
     return (
         <>
-        {modal && <ProductModal onOpen={handleOpen} onClose={handleClose} onSave={handleSave}/>}
-        <div className="btn-container">
-            <button onClick={handleOpen}>Add Product</button>
-        </div>
-        <div className="products-container">
-           {list.map((item)=>(
-               <Product key={item.id} value={item} />
-           )
-            )}
-        </div>
+            {modal && <ProductModal
+                onOpen={handleOpen}
+                data={currentItem}
+                onClose={handleClose}
+                onSave={currentItem ? handleEdit : handleSave}
+            />}
+            <div className="btn-container">
+                <button onClick={handleOpen}>Add Product</button>
+            </div>
+            <div>
+                <input type="text" onChange={handleSearch} />
+            </div>
+            <div className="products-container">
+                {list.filter((item) => {
+                    if (search === "" || item.name.toLowerCase().includes(search.toLowerCase())) {
+                        return item;
+                    }
+                }).map((item)=>(
+                    <Product
+                        key={item.id}
+                        value={item}
+                        setCurrentItem={setCurrentItem}
+                        handleOpen={handleOpen}
+                    />
+                ))}
+            </div>
         </>
     )
 }
