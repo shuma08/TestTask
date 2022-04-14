@@ -1,17 +1,14 @@
 import React, { useState, useRef, useEffect, forwardRef } from "react";
-import useModal from "../../../customHooks/useModal";
 import {
   Modal,
   Form,
   Input,
   ButtonToolbar,
   Button,
-  Uploader,
   Schema
 } from "rsuite";
-import { postProduct } from "../../../redux/action/getProductAction";
 import "./styles.css"
-import { useDispatch } from "react-redux";
+
 
 const TextField = forwardRef((props, ref) => {
   const { name, label = null, accepter, className, ...rest } = props;
@@ -32,41 +29,35 @@ const Textarea = forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
 ));
 
-const { StringType, DateType } = Schema.Types;
-const model = Schema.Model({
-  title: StringType().isRequired("This field is required."),
-  name: StringType().isRequired("This field is required."),
-  count: StringType().isRequired("This field is required."),
-});
+// const { StringType, DateType } = Schema.Types;
+// const model = Schema.Model({
+//   title: StringType().isRequired("This field is required."),
+//   name: StringType().isRequired("This field is required."),
+//   count: StringType().isRequired("This field is required."),
+// });
+// const generateDate = () => new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
 
-const initialFormValue = {
-    name:"",
-    count:"",
-    imageUrl:""
-  }
-const ProductModal = ({ onOpen, onSave, onClose, data=initialFormValue }) => {
+// const initialFormValue = {
+//     title:"",
+//     name:"",
+//     description:"",
+//     date: "",
+//     imageUrl:""
+//   }
+const ProductModal = ({ onOpen, onSave, onClose, data }) => {
   const formRef = useRef();
   const [formValue, setFormValue] = useState(data);
+  const [currentDate,setCurrentDate] = useState(null)
   const [avatar, setAvatar] = useState(null);
   const handleSubmit = () => {
-    // if (!formRef.current.check()) {
-    //   return;
-    // }
     onClose();
     onSave(formValue);
   };
   const handleImg = (e) => {
-    console.log(e.target.files[0]);
     if (e?.target?.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = function() {
-        console.log('RESULT', reader.result)
-        setFormValue({...formValue, imageUrl: reader.result})
-      }
-      const avatarBase = reader.readAsDataURL(file);
-      console.log(avatarBase);
-      setFormValue({...formValue, imageUrl: avatarBase})
+      const avatarBlob = URL.createObjectURL(e.target.files[0]);
+      setAvatar(avatarBlob);
+      setFormValue({...formValue, imageUrl: avatarBlob})
     }
   }
 
@@ -86,10 +77,10 @@ const ProductModal = ({ onOpen, onSave, onClose, data=initialFormValue }) => {
         className="customize_newEventForm"
         onChange={setFormValue}
         formValue={formValue}
-        model={model}
+        // model={model}
       >
         <TextField
-          name="name"
+          name="title"
           label="Title"
           className="custom_inputField"
           placeholder="Add Title"
@@ -98,9 +89,9 @@ const ProductModal = ({ onOpen, onSave, onClose, data=initialFormValue }) => {
           <div className="deadlineDate">
             <TextField
               className="customize_time"
-              name="count"
-              label="Count"
-              placeholder="Set number of product"
+              name="name"
+              label="Name"
+              placeholder="Add Name"
             />
           </div>
           {/* <Uploader
@@ -110,7 +101,7 @@ const ProductModal = ({ onOpen, onSave, onClose, data=initialFormValue }) => {
                 Upload your photo
             </button>
           </Uploader> */}
-         
+          
           {/* <TextField
               className="customize_time"
               name="imageUrl"
@@ -118,9 +109,9 @@ const ProductModal = ({ onOpen, onSave, onClose, data=initialFormValue }) => {
               placeholder="Paste img Url"
             /> */}
           <div className="uploader-container">
-          <label className="uploader" htmlFor='avatar'> Choose img</label>
-          <input type='file' id='avatar' onChange={handleImg} />
-          {avatar && <img src={avatar} alt='avatar'/>}
+            <label className="uploader" htmlFor='avatar'> Choose img</label>
+            <input type='file' id='avatar' onChange={handleImg}  />
+            {avatar && <img className="upoad-avatar" src={avatar} alt='avatar'/>}
           </div>
         </div>
         <TextField

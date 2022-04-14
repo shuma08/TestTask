@@ -4,9 +4,9 @@ import {deleteProduct} from "../redux/action/getProductAction";
 import ConfirmModal from "./modals/confirmModal/confirmModal";
 import "./ProductStyles.css";
 
-const Product = ({value, setCurrentItem, handleOpen}) => {
+const Product = ({value, setCurrentItem, handleOpen,currentDate}) => {
     const [confirmModal, setConfirmModal] = useState(false);
-    const {id, imageUrl, count, name} = value;
+    const {id, imageUrl, title, name,description,date} = value;
     const dispatch = useDispatch()
     const hendleDelete = () => {
         dispatch(deleteProduct(id))
@@ -22,10 +22,14 @@ const Product = ({value, setCurrentItem, handleOpen}) => {
                 <div className="img-container">
                     <img src={imageUrl}></img>
                 </div>
-                <div>
-                    <h2>{name}</h2>
+                <div className="title-container">
+                    <h2>{title}</h2>
                 </div>
-                <p>Number of items {count}</p>
+                <div>
+                    <p>{name}</p>
+                    <p>{description}</p>
+                    <p>{date}</p>
+                </div>
                 <div className="btnContainer">
                     <button onClick={handleModal}>Edit</button>
                     <button onClick={()=>setConfirmModal(true)}>Delete</button>

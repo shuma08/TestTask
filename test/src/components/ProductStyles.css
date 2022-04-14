@@ -5,11 +5,15 @@
     width: 200px;
     background: #fff;
     box-shadow: 3px 3px 3px grey;
+    margin-bottom: 20px;
 }
 .content-container {
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 .btnContainer {
     display: flex;
@@ -37,3 +41,9 @@
 img {
     width: 100%;
 }
+.title-container {
+    display: flex;
+}
+ p,h2 {
+     margin: 0;
+ }

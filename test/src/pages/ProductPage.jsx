@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ConfirmModal from "../components/modals/confirmModal/confirmModal";
-import NewModal from "../components/modals/modal";
 import ProductModal from "../components/modals/ProductModal/ProductModal";
 import Product from "../components/Product";
 import useModal from "../customHooks/useModal";
@@ -37,8 +36,8 @@ const ProductPage = () => {
             <div className="btn-container">
                 <button onClick={handleOpen}>Add Product</button>
             </div>
-            <div>
-                <input type="text" onChange={handleSearch} />
+            <div className="search-container">
+                <input type="text" placeholder="Search" onChange={handleSearch} />
             </div>
             <div className="products-container">
                 {list.filter((item) => {
